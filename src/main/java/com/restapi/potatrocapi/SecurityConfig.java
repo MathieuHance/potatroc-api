@@ -16,11 +16,12 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/api/public").permitAll()
-                .antMatchers("/api/private-scoped").access("#oauth2.hasScope('read:messages')")
                 .mvcMatchers("/api/**").authenticated()
+                .mvcMatchers("/api/").denyAll()
+                .mvcMatchers("/**").denyAll()
                 .anyRequest().permitAll();
     }
+
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
