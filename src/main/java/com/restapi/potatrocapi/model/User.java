@@ -1,38 +1,98 @@
 package com.restapi.potatrocapi.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 @Entity
-@Table(name = "users")
+@Table(name = "User", schema = "public")
+
+
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "user_id")
+    private long user_id;
+
+    @Column(name = "authid")
+    private String authid;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "pseudo")
+    private String pseudo;
 
     @Column(name = "name")
     private String name;
 
+    @Column(name = "surname")
+    private String surname;
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL )
+    @JoinColumn(name = "location_user_id")
+    @JsonIgnoreProperties("user")
+    private Location location;
+
     public User() {
     }
 
-    public User(String name) {
+    public User( String authid, String email, String pseudo, String name, String surname, Location location){
+        this.authid = authid;
+        this.email = email;
+        this.pseudo = pseudo;
         this.name = name;
+        this.surname = surname;
+        this.location = location;
+    }
+    public void setId( long user_id ) {
+        this.user_id =  user_id;
+    }
+    public long getId() {
+        return user_id;
     }
 
-    public long getId() {
-        return id;
+    public void setAuthid (String authid) {
+        this.authid = authid;
+    }
+    public String getAuthid() {
+        return this.authid;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+    public String getPseudo() {
+        return this.pseudo;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-
     public String getName() {
         return this.name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+    public String getSurname() {
+        return this.surname;
+    }
+
+    public void setLocation(Location location){
+        this.location = location;
+    }
+    public Location getLocation(){
+        return this.location;
     }
 }

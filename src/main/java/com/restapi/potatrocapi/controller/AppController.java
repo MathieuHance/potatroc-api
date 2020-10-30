@@ -1,8 +1,12 @@
 package com.restapi.potatrocapi.controller;
 
+
+import com.restapi.potatrocapi.tools.tokenInfo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.web.bind.annotation.*;
+
 
 @CrossOrigin
 @RestController
@@ -17,6 +21,8 @@ public class AppController {
     @Value("${auth0.clientId}")
     private String clientId;
 
+
+
     @RequestMapping(value = "/api/public", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public String publicEndpoint() {
@@ -28,10 +34,11 @@ public class AppController {
     @RequestMapping(value = "/api/private", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public String privateEndpoint() {
-        return new JSONObject()
-                .put("message", "BIngo")
-                .toString();
+        String authId = new tokenInfo().getUserSub();
+        return authId;
     }
+
+
 
     @RequestMapping(value = "/api/private-scoped", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody

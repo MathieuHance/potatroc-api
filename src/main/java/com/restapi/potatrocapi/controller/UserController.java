@@ -8,7 +8,7 @@ import java.util.Optional;
 import com.restapi.potatrocapi.model.User;
 import com.restapi.potatrocapi.repository.UserRepository;
 
-import org.json.JSONObject;
+import com.restapi.potatrocapi.tools.tokenInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin
 @RestController
-
-
 public class UserController {
 
     @Autowired
@@ -35,6 +33,27 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "/api/user/name", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<User> findByAuthid() {
+        String authid = new tokenInfo().getUserSub();
+        List<User> users = repository.findByAuthid(authid);
+        return users;
+    }
+
+    @RequestMapping(value = "/api/user/exist", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public boolean checkAuth0Id() {
+        boolean response = false;
+        String authid = new tokenInfo().getUserSub();
+        List<User> users = repository.findByAuthid(authid);
+        if (users.size() !=0 ){ 
+            response = true;
+        }
+        return response;
+    }
+
+
     @RequestMapping(value = "api/user/{id}", method = RequestMethod.GET, produces = "application/json")
     public Optional getUser(@PathVariable("id") long id) {
         Optional<User> user = repository.findById(id);
@@ -43,9 +62,16 @@ public class UserController {
     }
 
     @PostMapping("api/user")
-    public User postUser(@RequestBody User user) {
-        User _user = repository.save(new User(user.getName()));
-        return _user;
+    public String postUser(@RequestBody User user) {
+        List<User> usersWithSameAuthid = repository.findByAuthid(user.getAuthid());
+        User _user = new User( user.getAuthid(), user.getEmail(), user.getPseudo(), user.getName(), user.getSurname(), user.getLocation() );
+        if (usersWithSameAuthid.size() == 0 ){
+            repository.save(_user);
+            return "user correctly  registered!";
+        }else{
+            return "user already exists!";
+        }
+
     }
 
     @DeleteMapping("api/user/{id}")

@@ -1,4 +1,4 @@
-package com.restapi.potatrocapi;
+package com.restapi.potatrocapi.config;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
