@@ -1,12 +1,10 @@
 package com.restapi.potatrocapi.model;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 import javax.persistence.*;
 @Entity
-@Table(name = "User", schema = "public")
+@Table(name = "user", schema = "potatroc")
 
 
 public class User {

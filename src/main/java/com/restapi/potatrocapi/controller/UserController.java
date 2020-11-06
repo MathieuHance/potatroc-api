@@ -33,12 +33,30 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/api/user/name", method = RequestMethod.GET, produces = "application/json")
+
+
+    @RequestMapping(value = "/api/user", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<User> findByAuthid() {
         String authid = new tokenInfo().getUserSub();
         List<User> users = repository.findByAuthid(authid);
         return users;
+    }
+
+    @RequestMapping(value = "/api/user/query", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<User> findAllUsersNative() {
+        List<User> users = repository.findAllUsersNative();
+        return users;
+
+    }
+
+    @RequestMapping(value = "/api/user/location", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public double findDistance() {
+        double location = repository.findDistance();
+        return location;
+
     }
 
     @RequestMapping(value = "/api/user/exist", method = RequestMethod.GET, produces = "application/json")
@@ -64,6 +82,7 @@ public class UserController {
     @PostMapping("api/user")
     public String postUser(@RequestBody User user) {
         List<User> usersWithSameAuthid = repository.findByAuthid(user.getAuthid());
+
         User _user = new User( user.getAuthid(), user.getEmail(), user.getPseudo(), user.getName(), user.getSurname(), user.getLocation() );
         if (usersWithSameAuthid.size() == 0 ){
             repository.save(_user);
@@ -71,7 +90,6 @@ public class UserController {
         }else{
             return "user already exists!";
         }
-
     }
 
     @DeleteMapping("api/user/{id}")
