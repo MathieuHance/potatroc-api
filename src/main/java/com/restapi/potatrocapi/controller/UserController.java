@@ -24,22 +24,22 @@ public class UserController {
     UserRepository repository;
 
 
-    @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = "application/json")
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        repository.findAll().forEach(users::add);
 
-        return users;
-
-    }
 
 
 
     @RequestMapping(value = "/api/user", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<User> findByAuthid() {
+    public User findByAuthid() {
         String authid = new tokenInfo().getUserSub();
-        List<User> users = repository.findByAuthid(authid);
+        User user = repository.findByAuthid(authid);
+        return user;
+    }
+
+    @RequestMapping(value = "api/users", method = RequestMethod.GET, produces = "application/json")
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        repository.findAll().forEach(users::add);
         return users;
     }
 
@@ -64,8 +64,8 @@ public class UserController {
     public boolean checkAuth0Id() {
         boolean response = false;
         String authid = new tokenInfo().getUserSub();
-        List<User> users = repository.findByAuthid(authid);
-        if (users.size() !=0 ){ 
+        User user = repository.findByAuthid(authid);
+        if (user != null ){
             response = true;
         }
         return response;
@@ -81,10 +81,10 @@ public class UserController {
 
     @PostMapping("api/user")
     public String postUser(@RequestBody User user) {
-        List<User> usersWithSameAuthid = repository.findByAuthid(user.getAuthid());
+        User userWithSameAuthid = repository.findByAuthid(user.getAuthid());
 
-        User _user = new User( user.getAuthid(), user.getEmail(), user.getPseudo(), user.getName(), user.getSurname(), user.getLocation() );
-        if (usersWithSameAuthid.size() == 0 ){
+        User _user = new User( user.getAuthid(), user.getEmail(), user.getPseudo(), user.getName(), user.getSurname(), user.getLocation() ,user.getAdmin());
+        if (userWithSameAuthid == null ){
             repository.save(_user);
             return "user correctly  registered!";
         }else{

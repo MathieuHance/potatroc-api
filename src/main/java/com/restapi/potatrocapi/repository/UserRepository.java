@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByAuthid(@Param("authid") String authid);
+    User findByAuthid(@Param("authid") String authid);
 
     @Query(
             value = "Select u.* from potatroc.user u ",
@@ -23,8 +23,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             value = "select st_distance_sphere(st_makepoint(3.450078945154793, 50.56683384660144),st_makepoint(3.381802, 50.6052712))from potatroc.location",
             nativeQuery = true)
     double findDistance();
-
-
-
 
 }

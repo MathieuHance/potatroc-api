@@ -29,6 +29,9 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "admin", columnDefinition = "boolean default false")
+    private boolean admin;
+
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL )
     @JoinColumn(name = "location_user_id")
     @JsonIgnoreProperties("user")
@@ -37,13 +40,14 @@ public class User {
     public User() {
     }
 
-    public User( String authid, String email, String pseudo, String name, String surname, Location location){
+    public User( String authid, String email, String pseudo, String name, String surname, Location location, boolean admin){
         this.authid = authid;
         this.email = email;
         this.pseudo = pseudo;
         this.name = name;
         this.surname = surname;
         this.location = location;
+        this.admin = admin;
     }
     public void setId( long user_id ) {
         this.user_id =  user_id;
@@ -92,5 +96,12 @@ public class User {
     }
     public Location getLocation(){
         return this.location;
+    }
+
+    public void setAdmin(boolean admin){
+        this.admin = admin;
+    }
+    public boolean getAdmin(){
+        return this.admin;
     }
 }
