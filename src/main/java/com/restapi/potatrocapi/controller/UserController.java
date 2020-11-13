@@ -23,11 +23,7 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
-
-
-
-
-
+    
     @RequestMapping(value = "/api/user", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public User findByAuthid() {
