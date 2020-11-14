@@ -7,7 +7,6 @@ import java.util.Optional;
 import com.restapi.potatrocapi.model.Unit;
 import com.restapi.potatrocapi.model.Vegetable;
 import com.restapi.potatrocapi.repository.UnitRepository;
-import com.restapi.potatrocapi.repository.UserRepository;
 import com.restapi.potatrocapi.repository.VegetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +21,6 @@ public class VegetableService {
     @Autowired
     VegetableRepository vegetableRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     public Optional getVegetable(long id) {
         Optional<Vegetable> vegetable  = vegetableRepository.findById(id);

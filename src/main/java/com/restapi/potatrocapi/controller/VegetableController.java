@@ -1,11 +1,8 @@
 package com.restapi.potatrocapi.controller;
 
 import com.restapi.potatrocapi.Service.VegetableService;
-import com.restapi.potatrocapi.model.Crop;
-import com.restapi.potatrocapi.model.User;
 import com.restapi.potatrocapi.model.Vegetable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +36,7 @@ public class VegetableController {
         return _vegetable;
     }
     @PutMapping("api/vegetable/{id}")
-    public ResponseEntity<Vegetable> updateUser(@PathVariable("id") long id, @RequestBody Vegetable vegetable) {
+    public ResponseEntity<Vegetable> updateVegetable(@PathVariable("id") long id, @RequestBody Vegetable vegetable) {
         ResponseEntity<Vegetable> _vegetable = vegetableService.editVegetable(id, vegetable);
         return _vegetable;
     }

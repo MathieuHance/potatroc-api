@@ -10,7 +10,7 @@ import javax.persistence.*;
         value = {"createdAt", "updatedAt"}
 )
 
-public class Unit extends InfoModel {
+public class Unit{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "unit_id")

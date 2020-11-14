@@ -3,7 +3,9 @@ package com.restapi.potatrocapi.controller;
 import com.restapi.potatrocapi.Service.CropService;
 import com.restapi.potatrocapi.model.Crop;
 
+import com.restapi.potatrocapi.model.Vegetable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,5 +35,17 @@ public class CropController {
         Crop _crop = cropService.addCrop(crop);
         return _crop;
 
+    }
+
+    @PutMapping("api/crop/{id}")
+    public ResponseEntity<Crop> updateCrop(@PathVariable("id") long id, @RequestBody Crop crop) {
+        ResponseEntity<Crop> _crop = cropService.editCrop(id, crop);
+        return _crop;
+    }
+
+    @DeleteMapping("api/crop/{id}")
+    public ResponseEntity<String> deleteCrop(@PathVariable("id") long id) {
+        ResponseEntity<String> crop = cropService.deleteCrop(id);
+        return crop;
     }
 }
