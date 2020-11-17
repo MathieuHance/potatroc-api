@@ -18,7 +18,7 @@ public class Vegetable {
     @Column(name = "price")
     private double price;
 
-    @ManyToOne(fetch = FetchType.EAGER )
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unit_vegetable_id")
     private Unit unit;
 
