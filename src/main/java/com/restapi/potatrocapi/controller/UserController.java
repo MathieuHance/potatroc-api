@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 
+import com.restapi.potatrocapi.Service.ManagementService;
 import com.restapi.potatrocapi.Service.UserService;
+import com.restapi.potatrocapi.model.ManagementToken;
 import com.restapi.potatrocapi.model.User;
+import com.restapi.potatrocapi.model.UserAuth;
 import com.restapi.potatrocapi.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ManagementService managementService;
 
     @RequestMapping(value = "api/user/{id}", method = RequestMethod.GET, produces = "application/json")
     public Optional getUser(@PathVariable("id") long id) {
@@ -66,6 +72,13 @@ public class UserController {
     public boolean checkAuth0Id() {
         boolean response = userService.checkAuth0Id();
         return response;
+    }
+
+    @RequestMapping(value = "/api/user/token/{id}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public String getToke(@PathVariable("id") String id) {
+        UserAuth response = managementService.getUserMail(id);
+        return response.getEmail();
     }
 
     @PostMapping("api/user")
