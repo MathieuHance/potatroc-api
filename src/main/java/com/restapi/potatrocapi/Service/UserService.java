@@ -1,12 +1,10 @@
 package com.restapi.potatrocapi.Service;
 
 
-import com.restapi.potatrocapi.model.Unit;
 import com.restapi.potatrocapi.model.User;
-import com.restapi.potatrocapi.model.Vegetable;
 import com.restapi.potatrocapi.repository.UserRepository;
 import com.restapi.potatrocapi.repository.VegetableRepository;
-import com.restapi.potatrocapi.tools.tokenInfo;
+import com.restapi.potatrocapi.utils.tokenInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

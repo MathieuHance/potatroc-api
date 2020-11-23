@@ -1,7 +1,7 @@
 package com.restapi.potatrocapi.controller;
 
 
-import com.restapi.potatrocapi.tools.tokenInfo;
+import com.restapi.potatrocapi.utils.tokenInfo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 

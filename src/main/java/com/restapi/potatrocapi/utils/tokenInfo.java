@@ -1,4 +1,4 @@
-package com.restapi.potatrocapi.tools;
+package com.restapi.potatrocapi.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
